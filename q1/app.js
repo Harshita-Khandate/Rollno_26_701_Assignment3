@@ -15,7 +15,7 @@ app.get("/",(req,res)=>{
 })
 var storage=multer.diskStorage({
   destination:(req,file,cb)=>{
-    if(file.mimetype!=="image/jpeg")
+    if(file.mimetype!=="image/png")
     {
         return cb("Invalid type")
     }
