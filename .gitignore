@@ -1,0 +1,11 @@
+node_modules
+.mcp.json
+.windsurfrules
+AGENT.md
+CLAUDE.md
+.agents
+.cursor
+.github
+.jetro
+data
+projects

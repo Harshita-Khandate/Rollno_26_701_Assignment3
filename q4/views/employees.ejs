@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Employees</title></head>
+<body>
+  <h1>Employees</h1>
+  <form method="post" action="/logout"><button type="submit">Logout</button></form>
+  <p><a href="/employees/new">Add employee</a></p>
+  <% if (message) { %><p><%= message %></p><% } %>
+  <table border="1" cellpadding="5">
+    <thead><tr><th>Employee ID</th><th>Name</th><th>Email</th><th>Department</th><th>Designation</th><th>Net salary</th><th>Actions</th></tr></thead>
+    <tbody>
+      <% employees.forEach(employee => { %>
+        <tr>
+          <td><%= employee.empid %></td><td><%= employee.name %></td><td><%= employee.email %></td>
+          <td><%= employee.department %></td><td><%= employee.designation %></td><td><%= employee.netSalary.toFixed(2) %></td>
+          <td><a href="/employees/<%= employee._id %>/edit">Edit</a>
+            <form method="post" action="/employees/<%= employee._id %>/delete" style="display:inline" onsubmit="return confirm('Delete this employee?')">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>

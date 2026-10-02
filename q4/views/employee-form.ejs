@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title><%= employee ? 'Edit' : 'Add' %> Employee</title></head>
+<body>
+  <h1><%= employee ? 'Edit' : 'Add' %> Employee</h1>
+  <p><a href="/employees">Back to employees</a></p>
+  <% if (error) { %><p><%= error %></p><% } %>
+  <form method="post" action="<%= employee ? `/employees/${employee._id}/update` : '/employees' %>">
+    <p><label>Name <input name="name" value="<%= employee?.name || '' %>" required></label></p>
+    <p><label>Email <input name="email" type="email" value="<%= employee?.email || '' %>" required></label></p>
+    <p><label>Department <input name="department" value="<%= employee?.department || '' %>" required></label></p>
+    <p><label>Designation <input name="designation" value="<%= employee?.designation || '' %>" required></label></p>
+    <p><label>Basic salary <input name="basicSalary" type="number" min="0" step="0.01" value="<%= employee?.basicSalary ?? '' %>" required></label></p>
+    <p><label>HRA <input name="hra" type="number" min="0" step="0.01" value="<%= employee?.hra ?? 0 %>"></label></p>
+    <p><label>Allowances <input name="allowances" type="number" min="0" step="0.01" value="<%= employee?.allowances ?? 0 %>"></label></p>
+    <p><label>Deductions <input name="deductions" type="number" min="0" step="0.01" value="<%= employee?.deductions ?? 0 %>"></label></p>
+    <p>Net salary is calculated as basic salary + HRA + allowances - deductions.</p>
+    <button type="submit">Save employee</button>
+  </form>
+</body>
+</html>

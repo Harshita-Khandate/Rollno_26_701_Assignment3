@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ERP Admin Login</title></head>
+<body>
+  <h1>ERP Admin Login</h1>
+  <% if (error) { %><p><%= error %></p><% } %>
+  <form method="post" action="/login">
+    <p><label>Username <input name="username" required autocomplete="username"></label></p>
+    <p><label>Password <input name="password" type="password" required autocomplete="current-password"></label></p>
+    <button type="submit">Login</button>
+  </form>
+</body>
+</html>

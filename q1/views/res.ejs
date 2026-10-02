@@ -1,0 +1,68 @@
+<h1>Registration Details</h1>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Field</th>
+        <th>Value</th>
+    </tr>
+
+    <tr>
+        <td>Username</td>
+        <td><%= data.username %></td>
+    </tr>
+
+    <tr>
+        <td>Password</td>
+        <td><%= data.password %></td>
+    </tr>
+
+    <tr>
+        <td>Confirm Password</td>
+        <td><%= data.cpassword %></td>
+    </tr>
+
+    <tr>
+        <td>Email</td>
+        <td><%= data.email %></td>
+    </tr>
+
+    <tr>
+        <td>Gender</td>
+        <td><%= data.gender %></td>
+    </tr>
+
+    <tr>
+        <td>Hobbies</td>
+        <td><%= data.hobbies %></td>
+    </tr>
+
+<tr>
+    <td>Profile Picture</td>
+    <td>
+        <img src="/upload/<%= files.profilepic[0].filename %>" width="100">
+        <br>
+        <a href="/download/<%= files.profilepic[0].filename %>">
+            Download
+        </a>
+    </td>
+</tr>
+
+<tr>
+    <td>Other Pictures</td>
+    <td>
+       <% files.otherpics.forEach(file => { %>
+
+    <img src="/upload/<%= file.filename %>" width="100">
+
+    <a href="/download/<%= file.filename %>">
+        Download
+    </a>
+
+<% }) %>
+    </td>
+</tr>
+
+
+
+</table>

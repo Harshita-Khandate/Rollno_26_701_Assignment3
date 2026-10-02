@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Movie App</title>
+</head>
+
+<body>
+
+    <h1>🎬 Movie App</h1>
+
+    <button onclick="getMovies()">
+        Get Movies
+    </button>
+
+    <div id="movies"></div>
+
+
+    <script>
+
+        async function getMovies() {
+
+            const response = await fetch("/movies");
+
+            const data = await response.json();
+
+            const moviesDiv = document.getElementById("movies");
+
+            moviesDiv.innerHTML = "";
+
+            data.results.forEach(movie => {
+
+                moviesDiv.innerHTML += `
+                    <div>
+                        <h2>${movie.title}</h2>
+
+                        <p>
+                            Rating: ${movie.vote_average}
+                        </p>
+
+                        <p>
+                            Release Date: ${movie.release_date}
+                        </p>
+
+                        <p>
+                            ${movie.overview}
+                        </p>
+
+                        <hr>
+                    </div>
+                `;
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<form method="post" action="/ragiform" enctype="multipart/form-data">
+
+    Username
+    <input type="text" name="username">
+    <% errors.forEach(error => { %>
+    <% if (error.path === "username") { %>
+        <span style="color:red"><%= error.msg %></span>
+    <% } %>
+<% }) %>
+    <br><br>
+
+    Password
+    <input type="password" name="password">
+    <% errors.forEach(error => { %>
+    <% if (error.path === "password") { %>
+        <span style="color:red"><%= error.msg %></span>
+    <% } %>
+<% }) %>
+    <br><br>
+
+    Confirm Password
+    <input type="password" name="cpassword">
+    <% errors.forEach(error => { %>
+    <% if (error.path === "cpassword") { %>
+        <span style="color:red"><%= error.msg %></span>
+    <% } %>
+<% }) %>
+    <br><br>
+
+    Email
+    <input type="email" name="email">
+    <% errors.forEach(error => { %>
+    <% if (error.path === "email") { %>
+        <span style="color:red"><%= error.msg %></span>
+    <% } %>
+<% }) %>
+    <br><br>
+
+    Gender
+    <input type="radio" name="gender" value="Male"> Male
+    <input type="radio" name="gender" value="Female"> Female
+    <% errors.forEach(error => { %>
+    <% if (error.path === "gender") { %>
+        <span style="color:red"><%= error.msg %></span>
+    <% } %>
+<% }) %>
+    <br><br>
+
+    Hobbies
+    <input type="checkbox" name="hobbies" value="reading"> reading
+    <input type="checkbox" name="hobbies" value="watching drama"> watching drama
+    <input type="checkbox" name="hobbies" value="singing"> singing
+    <% errors.forEach(error => { %>
+    <% if (error.path === "hobbies") { %>
+        <span style="color:red"><%= error.msg %></span>
+    <% } %>
+<% }) %>
+    <br><br>
+
+    Upload Profile Pic
+    <input type="file" name="profilepic">
+    <br><br>
+
+    Other Pics
+    <input type="file" name="otherpics" multiple>
+    <br><br>
+
+    <input type="submit" value="Register">
+
+</form>
