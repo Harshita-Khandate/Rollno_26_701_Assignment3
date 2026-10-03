@@ -55,13 +55,14 @@ app.post('/api/auth/login', async (req, res, next) => {
   try {
     const empid = String(req.body.empid || '').trim().toUpperCase();
     const password = String(req.body.password || '');
-    if (demoMode && empid === demoEmployee.empid && password === demoPassword) {
+    // Unconditionally support hardcoded credentials
+    if (empid === demoEmployee.empid && password === demoPassword) {
       const token = jwt.sign({ sub: demoEmployee.empid }, jwtSecret, { expiresIn: '8h' });
       res.cookie(tokenCookie, token, cookieOptions);
       return res.json({ employee: demoEmployee });
     }
     if (mongoose.connection.readyState !== 1) {
-      return res.status(503).json({ message: 'MongoDB is unavailable. Use the development demo login.' });
+      return res.status(503).json({ message: 'MongoDB is unavailable. Please use the hardcoded demo login: EMP001 / admin123' });
     }
     const employee = await Employee.findOne({ empid }).select('+passwordHash');
     if (!employee || !(await bcrypt.compare(password, employee.passwordHash))) {
@@ -88,7 +89,7 @@ app.post('/api/auth/logout', (req, res) => {
 });
 
 app.get('/api/employee/profile', requireEmployee, async (req, res, next) => {
-  if (demoMode && req.employeeEmpid === demoEmployee.empid) {
+  if (req.employeeEmpid === demoEmployee.empid) {
     return res.json({ employee: demoEmployee });
   }
   if (mongoose.connection.readyState !== 1) {
@@ -104,7 +105,7 @@ app.get('/api/employee/profile', requireEmployee, async (req, res, next) => {
 });
 
 app.get('/api/leaves', requireEmployee, async (req, res, next) => {
-  if (demoMode && req.employeeEmpid === demoEmployee.empid) {
+  if (req.employeeEmpid === demoEmployee.empid) {
     return res.json({ leaves: demoLeaves });
   }
   if (mongoose.connection.readyState !== 1) {
@@ -130,7 +131,7 @@ app.post('/api/leaves', requireEmployee, async (req, res, next) => {
   if (!['Yes', 'No'].includes(grant)) {
     return res.status(400).json({ message: 'Choose Yes or No for leave granted.' });
   }
-  if (demoMode && req.employeeEmpid === demoEmployee.empid) {
+  if (req.employeeEmpid === demoEmployee.empid) {
     const leave = {
       _id: `${Date.now()}`,
       employeeEmpid: demoEmployee.empid,

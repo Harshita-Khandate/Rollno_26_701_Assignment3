@@ -5,7 +5,13 @@ async function api(path, options = {}) {
     ...options,
     headers: { ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...options.headers },
   })
-  const result = await response.json()
+  const text = await response.text()
+  let result = {}
+  try {
+    result = text ? JSON.parse(text) : {}
+  } catch {
+    result = { message: text || 'Backend returned an empty or invalid response. Ensure server is running.' }
+  }
   if (!response.ok) throw new Error(result.message || 'Request failed.')
   return result
 }
@@ -17,8 +23,8 @@ function today() {
 }
 
 function Login({ onLogin }) {
-  const [empid, setEmpid] = useState('')
-  const [password, setPassword] = useState('')
+  const [empid, setEmpid] = useState('EMP001')
+  const [password, setPassword] = useState('admin123')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
 
@@ -39,10 +45,11 @@ function Login({ onLogin }) {
   return (
     <main>
       <h1>Employee login</h1>
+      <p><b>Hardcoded / Default Credentials:</b><br />Employee ID: <code>EMP001</code> | Password: <code>admin123</code></p>
       <form onSubmit={submit}>
         <p><label>Employee ID <input value={empid} onChange={(event) => setEmpid(event.target.value)} required /></label></p>
         <p><label>Password <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required /></label></p>
-        {error && <p role="alert">{error}</p>}
+        {error && <p role="alert" style={{ color: 'red' }}>{error}</p>}
         <button disabled={busy}>{busy ? 'Signing in...' : 'Login'}</button>
       </form>
     </main>
@@ -106,7 +113,7 @@ function App() {
     setPage('profile')
   }
 
-  if (loading) return <main className="loading-screen"><span className="brand-mark">N</span><p>Opening your workspace…</p></main>
+  if (loading) return <main><p>Loading employee portal...</p></main>
   if (!employee) return <Login onLogin={(current) => { setEmployee(current); setError(''); setNotice('') }} />
 
   const currency = (value) => value == null ? 'Not provided' : Number(value).toLocaleString(undefined, { style: 'currency', currency: 'INR' })
